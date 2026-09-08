@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: producer
+
+kafka:
+  topic: wikimedia.recentchange
+
+event-source:
+  url: https://stream.wikimedia.org/v2/stream/recentchange

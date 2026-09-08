@@ -20,7 +20,11 @@ public class KafkaProducerDemo {
         properties.setProperty("value.serializer", StringSerializer.class.getName());
 
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
-        ProducerRecord<String, String> record = new ProducerRecord<>("foo", "hello from java!");
+        ProducerRecord<String, String> record = new ProducerRecord<>("bar", "hello from java7");
+
+        kafkaProducer.send(record);
+
+        record = new ProducerRecord<>("bar", "hello from java8");
 
         kafkaProducer.send(record);
 

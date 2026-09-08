@@ -3,6 +3,8 @@ package com.yury.learnkafka;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.CooperativeStickyAssignor;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.OffsetAndMetadata;
+import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 public class ConsumerDemoCooperative {
@@ -18,7 +21,7 @@ public class ConsumerDemoCooperative {
     public static void main(String[] args) {
         log.info("Starting consumer");
 
-        String groupId = "consumer-demo";
+        String groupId = "bar-group";
 
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers", "localhost:9092");
@@ -28,7 +31,8 @@ public class ConsumerDemoCooperative {
         properties.setProperty("group.id", groupId);
 
         properties.setProperty("auto.offset.reset", "earliest");
-        properties.setProperty("enable.auto.commit", "true");
+        properties.setProperty("enable.auto.commit", "false");
+        properties.setProperty("auto.commit.interval.ms", "5000");
         properties.setProperty("partition.assignment.strategy", CooperativeStickyAssignor.class.getName());
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
@@ -45,7 +49,7 @@ public class ConsumerDemoCooperative {
             }
         }));
 
-        consumer.subscribe(List.of("foo"));
+        consumer.subscribe(List.of("bar"));
 
         try {
             while(true) {
@@ -53,6 +57,14 @@ public class ConsumerDemoCooperative {
                 records.forEach(record -> {
                     log.info("key {}, value {}, partition {}, offset {}",
                             record.key(), record.value(), record.partition(), record.offset());
+                    consumer.commitSync(Map.of(
+                            new TopicPartition(record.topic(), record.partition()), new OffsetAndMetadata(record.offset() + 1)));
+                    try {
+                        Thread.sleep(5000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    throw new RuntimeException("fuck");
                 });
             }
         } catch (WakeupException e) {
