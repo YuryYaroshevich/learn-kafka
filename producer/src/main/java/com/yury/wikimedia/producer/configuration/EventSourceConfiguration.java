@@ -19,7 +19,7 @@ public class EventSourceConfiguration {
                                    WikimediaChangeHandler wikimediaChangeHandler) {
         HttpConnectStrategy connectStrategy = ConnectStrategy
                 .http(URI.create(eventSourceUrl))
-                .connectTimeout(5, TimeUnit.SECONDS);
+                .header("User-Agent", "MyCoolTool/1.0");
         return new BackgroundEventSource.Builder(wikimediaChangeHandler, new EventSource.Builder(connectStrategy))
                 .build();
     }
