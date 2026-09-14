@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.net.URI;
-import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class EventSourceConfiguration {
