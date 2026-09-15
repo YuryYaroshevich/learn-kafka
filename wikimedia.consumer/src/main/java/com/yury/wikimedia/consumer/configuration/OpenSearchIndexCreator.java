@@ -31,6 +31,6 @@ public class OpenSearchIndexCreator implements ApplicationRunner {
 
         CreateIndexRequest createIndexRequest = new CreateIndexRequest(indexName);
         restHighLevelClient.indices().create(createIndexRequest, RequestOptions.DEFAULT);
-        log.info("Index {} was created in OpenSearch instance", indexName);
+        log.info("Index {} has been created in OpenSearch instance", indexName);
     }
 }

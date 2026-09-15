@@ -4,3 +4,7 @@ spring:
 
 opensearch:
   index: wikimedia
+
+kafka:
+  bootstrap-server: localhost:9092
+  group-id: wikimedia-consumer
