@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.opensearch.action.index.IndexRequest;
+import org.opensearch.action.index.IndexResponse;
 import org.opensearch.client.RequestOptions;
 import org.opensearch.client.RestHighLevelClient;
 import org.opensearch.client.indices.CreateIndexRequest;
@@ -33,7 +34,7 @@ public class OpenSearchService {
     @SneakyThrows
     public void saveData(String indexName, String data) {
         IndexRequest indexRequest = new IndexRequest(indexName).source(data, XContentType.JSON);
-        restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-        log.debug("Inserted in open search index {} the following data: {}", indexName, data);
+        IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+        log.info("Inserted in open search index {} the data with id {}", indexName, indexResponse.getId());
     }
 }

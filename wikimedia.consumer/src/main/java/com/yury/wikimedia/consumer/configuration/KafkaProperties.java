@@ -11,4 +11,6 @@ public class KafkaProperties {
     private final String bootstrapServer;
 
     private final String groupId;
+
+    private final String topicName;
 }

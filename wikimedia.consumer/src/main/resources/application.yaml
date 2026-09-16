@@ -7,4 +7,5 @@ opensearch:
 
 kafka:
   bootstrap-server: localhost:9092
-  group-id: wikimedia-consumer
+  group-id: wikimedia
+  topic-name: wikimedia.recentchange
