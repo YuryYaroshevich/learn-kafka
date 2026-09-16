@@ -11,7 +11,7 @@ public class WikimediaService {
 
     private final String indexName;
 
-    public WikimediaService(OpenSearchService openSearchService, @Value("${search-index.name}") String indexName) {
+    public WikimediaService(OpenSearchService openSearchService, @Value("${opensearch.index}") String indexName) {
         this.openSearchService = openSearchService;
         this.indexName = indexName;
     }
