@@ -1,5 +1,7 @@
 package com.yury.wikimedia.consumer.service;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,16 @@ public class WikimediaService {
     }
 
     public void saveData(String data) {
-        openSearchService.saveData(indexName, data);
+        openSearchService.saveData(indexName, getId(data), data);
         log.debug("Saved data to index {}", indexName);
+    }
+
+    private static String getId(String data) {
+        return JsonParser.parseString(data)
+                .getAsJsonObject()
+                .get("meta")
+                .getAsJsonObject()
+                .get("id")
+                .getAsString();
     }
 }
