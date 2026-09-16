@@ -1,5 +1,6 @@
 package com.yury.wikimedia.consumer.configuration;
 
+import com.yury.wikimedia.consumer.service.OpenSearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.opensearch.client.RequestOptions;
 import org.opensearch.client.RestHighLevelClient;
@@ -13,24 +14,16 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class OpenSearchIndexCreator implements ApplicationRunner {
-    private final RestHighLevelClient restHighLevelClient;
+    private final OpenSearchService openSearchService;
     private final String indexName;
 
-    public OpenSearchIndexCreator(RestHighLevelClient restHighLevelClient, @Value("${opensearch.index}") String indexName) {
-        this.restHighLevelClient = restHighLevelClient;
+    public OpenSearchIndexCreator(OpenSearchService openSearchService, @Value("${opensearch.index}") String indexName) {
+        this.openSearchService = openSearchService;
         this.indexName = indexName;
     }
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        boolean indexExists = restHighLevelClient.indices().exists(new GetIndexRequest(indexName), RequestOptions.DEFAULT);
-        if (indexExists) {
-            log.info("Index {} already exists in OpenSearch instance", indexName);
-            return;
-        }
-
-        CreateIndexRequest createIndexRequest = new CreateIndexRequest(indexName);
-        restHighLevelClient.indices().create(createIndexRequest, RequestOptions.DEFAULT);
-        log.info("Index {} has been created in OpenSearch instance", indexName);
+        openSearchService.createIndex(indexName);
     }
 }

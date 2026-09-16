@@ -25,7 +25,7 @@ public class ConsumerConfiguration {
         return new RestHighLevelClient(builder);
     }
 
-    @Bean
+    @Bean(destroyMethod = "close")
     public KafkaConsumer<String, String> kafkaConsumer(KafkaProperties kafkaProperties) {
         Properties properties = new Properties();
 
