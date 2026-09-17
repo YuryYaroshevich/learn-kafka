@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.TopicPartition;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.yury.wikimedia.consumer.service.WikimediaService;
@@ -29,6 +30,10 @@ public class WikimediaListener {
                 wikimediaService.saveData(value);
             } catch (Exception e) {
                 log.error("Failed to save data", e);
+                for (TopicPartition partition : records.partitions()) {
+                    long offset = records.records(partition).get(0).offset();
+                    kafkaConsumer.seek(partition, offset);
+                }
                 throw e;
             }
         }
