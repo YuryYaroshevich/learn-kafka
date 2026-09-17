@@ -21,6 +21,8 @@ public class WikimediaListener {
     @Scheduled(fixedRate = 5_000)
     public void consume() {
         ConsumerRecords<String, String> records = kafkaConsumer.poll(Duration.ofSeconds(30));
+        log.info("Fetched {} records from kafka", records.count());
+
         for (ConsumerRecord<String, String> record : records) {
             String value = record.value();
             try {

@@ -34,8 +34,7 @@ public class OpenSearchService {
     @SneakyThrows
     public void saveData(String indexName, String id, String data) {
         IndexRequest indexRequest = new IndexRequest(indexName).id(id).source(data, XContentType.JSON);
-        IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-        log.info("Inserted in open search index {} the data with id {}. Document id is {}",
-                indexName, id, indexResponse.getId());
+        restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+        log.info("Inserted in open search index {} the data with id {}", indexName, id);
     }
 }
