@@ -4,6 +4,7 @@ spring:
 
 opensearch:
   index: wikimedia
+  bulk-size: 100
 
 kafka:
   bootstrap-server: localhost:9092

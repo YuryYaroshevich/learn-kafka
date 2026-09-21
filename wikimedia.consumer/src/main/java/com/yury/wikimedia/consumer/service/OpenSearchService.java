@@ -1,8 +1,10 @@
 package com.yury.wikimedia.consumer.service;
 
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.opensearch.action.bulk.BulkRequest;
 import org.opensearch.action.index.IndexRequest;
 import org.opensearch.client.RequestOptions;
 import org.opensearch.client.RestHighLevelClient;
@@ -38,6 +40,18 @@ public class OpenSearchService {
         IndexRequest indexRequest =
                 new IndexRequest(indexName).id(id).source(data, XContentType.JSON);
         restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-        log.info("Inserted in open search index {} the data with id {}", indexName, id);
+        log.debug("Inserted in open search index {} the data with id {}", indexName, id);
+    }
+
+    @SneakyThrows
+    public void saveBulkData(String indexName, Map<String, String> idToDataMap) {
+        BulkRequest bulkRequest = new BulkRequest();
+        idToDataMap.entrySet().stream()
+                .map(entry -> new IndexRequest(indexName)
+                        .id(entry.getKey())
+                        .source(entry.getValue(), XContentType.JSON))
+                .forEach(bulkRequest::add);
+        restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
+        log.debug("Inserted {} documents into open search index {}", idToDataMap.size(), indexName);
     }
 }
