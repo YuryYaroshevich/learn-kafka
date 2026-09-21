@@ -6,6 +6,7 @@
         </encoder>
     </appender>
 
+    <logger name="com.yury.wikimedia.consumer.service.WikimediaService" level="debug" />
 
     <root level="info">
         <appender-ref ref="console"/>

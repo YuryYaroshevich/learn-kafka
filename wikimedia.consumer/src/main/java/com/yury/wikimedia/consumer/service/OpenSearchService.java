@@ -47,9 +47,11 @@ public class OpenSearchService {
     public void saveBulkData(String indexName, Map<String, String> idToDataMap) {
         BulkRequest bulkRequest = new BulkRequest();
         idToDataMap.entrySet().stream()
-                .map(entry -> new IndexRequest(indexName)
-                        .id(entry.getKey())
-                        .source(entry.getValue(), XContentType.JSON))
+                .map(
+                        entry ->
+                                new IndexRequest(indexName)
+                                        .id(entry.getKey())
+                                        .source(entry.getValue(), XContentType.JSON))
                 .forEach(bulkRequest::add);
         restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
         log.debug("Inserted {} documents into open search index {}", idToDataMap.size(), indexName);
