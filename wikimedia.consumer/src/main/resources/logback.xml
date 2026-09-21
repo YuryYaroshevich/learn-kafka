@@ -2,7 +2,7 @@
 <configuration>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%c{0}]: %m%n</pattern>
+            <pattern>[%c{0}] [%d{yyyy-MM-dd HH:mm:ss.SSS z}]: %m%n</pattern>
         </encoder>
     </appender>
 
