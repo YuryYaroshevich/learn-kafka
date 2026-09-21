@@ -10,25 +10,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-public class WikimediaChangeHandler implements BackgroundEventHandler  {
+public class WikimediaChangeHandler implements BackgroundEventHandler {
     private final KafkaProducer<String, String> kafkaProducer;
 
     private final String topic;
 
-    public WikimediaChangeHandler(KafkaProducer<String, String> kafkaProducer, @Value("${kafka.topic}") String topic) {
+    public WikimediaChangeHandler(
+            KafkaProducer<String, String> kafkaProducer, @Value("${kafka.topic}") String topic) {
         this.kafkaProducer = kafkaProducer;
         this.topic = topic;
     }
 
     @Override
-    public void onOpen() throws Exception {
-
-    }
+    public void onOpen() throws Exception {}
 
     @Override
-    public void onClosed() throws Exception {
-
-    }
+    public void onClosed() throws Exception {}
 
     @Override
     public void onMessage(String event, MessageEvent messageEvent) throws Exception {
@@ -38,9 +35,7 @@ public class WikimediaChangeHandler implements BackgroundEventHandler  {
     }
 
     @Override
-    public void onComment(String comment) throws Exception {
-
-    }
+    public void onComment(String comment) throws Exception {}
 
     @Override
     public void onError(Throwable t) {

@@ -2,7 +2,16 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.1.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.diffplug.spotless' version '8.10.2'
 }
+
+spotless {
+	java {
+		googleJavaFormat('1.27.0').aosp().reflowLongStrings().formatJavadoc(false).reorderImports(false).groupArtifact('com.google.googlejavaformat:google-java-format')
+	}
+}
+
+
 
 group = 'com.yury'
 version = '0.0.1-SNAPSHOT'

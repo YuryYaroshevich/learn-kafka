@@ -2,10 +2,6 @@ package com.yury.wikimedia.consumer.configuration;
 
 import com.yury.wikimedia.consumer.service.OpenSearchService;
 import lombok.extern.slf4j.Slf4j;
-import org.opensearch.client.RequestOptions;
-import org.opensearch.client.RestHighLevelClient;
-import org.opensearch.client.indices.CreateIndexRequest;
-import org.opensearch.client.indices.GetIndexRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -17,7 +13,8 @@ public class OpenSearchIndexCreator implements ApplicationRunner {
     private final OpenSearchService openSearchService;
     private final String indexName;
 
-    public OpenSearchIndexCreator(OpenSearchService openSearchService, @Value("${opensearch.index}") String indexName) {
+    public OpenSearchIndexCreator(
+            OpenSearchService openSearchService, @Value("${opensearch.index}") String indexName) {
         this.openSearchService = openSearchService;
         this.indexName = indexName;
     }

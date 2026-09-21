@@ -1,6 +1,5 @@
 package com.yury.wikimedia.consumer.service;
 
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +12,8 @@ public class WikimediaService {
 
     private final String indexName;
 
-    public WikimediaService(OpenSearchService openSearchService, @Value("${opensearch.index}") String indexName) {
+    public WikimediaService(
+            OpenSearchService openSearchService, @Value("${opensearch.index}") String indexName) {
         this.openSearchService = openSearchService;
         this.indexName = indexName;
     }

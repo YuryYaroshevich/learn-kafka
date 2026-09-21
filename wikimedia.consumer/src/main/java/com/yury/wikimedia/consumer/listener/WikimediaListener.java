@@ -1,5 +1,7 @@
 package com.yury.wikimedia.consumer.listener;
 
+import com.yury.wikimedia.consumer.service.WikimediaService;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -8,9 +10,6 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import com.yury.wikimedia.consumer.service.WikimediaService;
-
-import java.time.Duration;
 
 @Component
 @RequiredArgsConstructor
