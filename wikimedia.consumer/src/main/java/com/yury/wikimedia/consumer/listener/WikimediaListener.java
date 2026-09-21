@@ -27,6 +27,7 @@ public class WikimediaListener {
             String value = record.value();
             try {
                 wikimediaService.saveData(value);
+                kafkaConsumer.commitSync();
             } catch (Exception e) {
                 log.error("Failed to save data", e);
                 for (TopicPartition partition : records.partitions()) {
