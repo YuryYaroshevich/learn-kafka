@@ -40,6 +40,7 @@ public class WikimediaListener {
                 List<String> values = batch.stream().map(ConsumerRecord::value).toList();
                 wikimediaService.saveBulkWikies(values);
             }
+            kafkaConsumer.commitSync();
         } catch (Exception e) {
             log.error("Failed to save data", e);
             for (TopicPartition partition : consumerRecords.partitions()) {
